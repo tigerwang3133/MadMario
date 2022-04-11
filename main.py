@@ -12,9 +12,10 @@ from nes_py.wrappers import JoypadSpace
 from metrics import MetricLogger
 from agent import Mario
 from wrappers import ResizeObservation, SkipFrame
+import torch
 
 # Initialize Super Mario environment
-env = gym_super_mario_bros.make('SuperMarioBros-1-1-v0')
+env = gym_super_mario_bros.make('SuperMarioBros-1-2-v0')
 
 # Limit the action-space to
 #   0. walk right
@@ -80,6 +81,7 @@ for e in range(episodes):
     logger.log_episode()
 
     if e % 20 == 0:
+        torch.cuda.empty_cache()
         logger.record(
             episode=e,
             epsilon=mario.exploration_rate,
